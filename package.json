@@ -1,0 +1,35 @@
+{
+  "name": "goit-react-hw-03-image-finder",
+  "version": "2.0.0",
+  "description": "",
+  "homepage": "https://anastasiialav.github.io/goit-react-hw-03-image-finder/",
+
+  "scripts": {
+    "start": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /goit-react-hw-03-image-finder/",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnastasiiaLAV/goit-react-hw-03-image-finder.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnastasiiaLAV/goit-react-hw-03-image-finder/issues"
+  },
+  "dependencies": {
+    "modern-normalize": "^1.1.0"
+  },
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.6.0",
+    "cssnano": "^5.1.12",
+    "parcel": "^2.6.0",
+    "parcel-reporter-clean-dist": "^1.0.4",
+    "postcss": "^8.4.16",
+    "posthtml-include": "^1.7.4"
+  },
+  "browserslist": "> 0.5%, last 2 versions, not dead"
+}
