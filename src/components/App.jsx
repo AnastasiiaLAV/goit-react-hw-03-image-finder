@@ -4,19 +4,17 @@ import getImages from '../servaice/fetch-api';
 import Serchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
-
-import Modal from './Modal/Modal';
-
+import Button from './Button/Button';
+import { AppWrapper } from './App.styled';
 export default class App extends Component {
   state = {
     query: '',
     page: 1,
     images: [],
     totalHits: null,
-    // nameImage: '',
+    totalPages: null,
     isLoading: false,
     error: null,
-    showModal: false,
   }
 
   async componentDidUpdate(_, prevState) {
@@ -25,20 +23,16 @@ export default class App extends Component {
     if (prevState.query !== query || prevState.page !== page) {
       this.setState({ isLoading: true });
     
-
     try {
         const response = await getImages(query, page);
-
         this.setState(prevState => ({
           images: [...prevState.images, ...response.hits],
           totalHits: response.totalHits,
         }));
-
       if (page === 1 && response.totalHits !== 0) {
           Notify.success(`Hooray! We found ${response.totalHits} images.`);
         }
           
-
       if (response.hits.length === 0) {
           Notify.failure(
         'Sorry, there are no images matching your search query. Please try again.'
@@ -63,22 +57,23 @@ export default class App extends Component {
       page: 1,
     });
   };
-    
-  toggleModal = () => {
-    this.setState(({ showModal }) => ({
-      showModal: !showModal,
-    }));
-    }
-    
+  
+  loadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+        }));
+  }
+
   render() {
-        const {images, isLoading, showModal } = this.state;
+    const { images, isLoading, totalHits} = this.state;
+    const showBtn = images.length !== 0 && images.length !== totalHits && !isLoading;
     return (
-      <div>
+      <AppWrapper>
         <Serchbar onSubmit={this.formSubmit} />
         {isLoading && <Loader />}
-        <ImageGallery images={images} onClick={this.toggleModal}/>
-        {/* {showModal && <Modal/>} */}
-      </div>
+        <ImageGallery images={images} />
+        {showBtn && <Button onClick={this.loadMore} />}
+      </AppWrapper>
     )
   }
 };
