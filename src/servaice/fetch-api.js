@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-
 const API_URL = 'https://pixabay.com/api/';
 const API_KEY = '28097205-76b692db46bdf0121d0cf888f';
 
-export async function getImages(query, page) {
+export default async function getImages(query, page) {
   const SEARH_PARAMS = {
     key: API_KEY,
     image_type: 'photo',

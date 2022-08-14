@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default class Serchbar extends Component{
     state = {
-        nameImage: '',
+        queryImage: '',
     }
     
     static propTypes = {
@@ -12,21 +12,20 @@ export default class Serchbar extends Component{
     };
     
     handleNameChange = event => {
-        this.setState({ nameImage: event.currentTarget.value.toLowerCase() });
+        this.setState({ queryImage: event.currentTarget.value.toLowerCase() });
     }
 
     handleSubmit = event => {
         event.preventDefault();
-        if (this.state.nameImage.trim() === '') {
-          return Notify.warning('Enter your request');
-            
+        if (this.state.queryImage.trim() === '') {
+            return Notify.warning('Enter your request');
         }
-        this.props.onSubmit(this.state.nameImage)
-        this.setState({nameImage: ''})
+        this.props.onSubmit(this.state.queryImage)
+        this.setState({queryImage: ''})
     }
 
     render() {
-        const { nameImage } = this.state;
+        const { queryImage } = this.state;
         const { handleNameChange, handleSubmit } = this;
         return (
             <header className="searchbar">
@@ -38,10 +37,10 @@ export default class Serchbar extends Component{
                     <input
                     className="input"
                     type="text"
-                    autocomplete="off"
-                    autofocus
+                    autoComplete="off"
+                    autoFocus
                     placeholder="Search images and photos"
-                    value={nameImage}
+                    value={queryImage}
                     onChange={handleNameChange}
                     />
                 </form>
