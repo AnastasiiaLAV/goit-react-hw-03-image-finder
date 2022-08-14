@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
+import { GalleryList } from './ImageGallery.styled';
 
-const ImageGallery = ({ images }) => {
+const ImageGallery = ({ images, onClick }) => {
     console.log('images', images)
     return (
-        <ul className="gallery">
+        <GalleryList className="gallery">
             {images.map((image) => (
                 <ImageGalleryItem key={image.id} {...image} />
             ))}
-        </ul>
+        </GalleryList>
     );
 }
 

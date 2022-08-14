@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
-import { Notify, Report } from 'notiflix/build/notiflix-notify-aio';
+import { Notify} from 'notiflix/build/notiflix-notify-aio';
 import getImages from '../servaice/fetch-api';
 import Serchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Loader from './Loader/Loader';
+
+import Modal from './Modal/Modal';
 
 export default class App extends Component {
   state = {
     query: '',
     page: 1,
     images: [],
+    totalHits: null,
     // nameImage: '',
     isLoading: false,
+    error: null,
+    showModal: false,
   }
 
   async componentDidUpdate(_, prevState) {
@@ -19,7 +24,7 @@ export default class App extends Component {
 
     if (prevState.query !== query || prevState.page !== page) {
       this.setState({ isLoading: true });
-    }
+    
 
     try {
         const response = await getImages(query, page);
@@ -34,12 +39,10 @@ export default class App extends Component {
         }
           
 
-      if (response.totalHits === 0) {
-          Report.failure(
-        'Found nothing for you.',
-        'Please keep the correct request.',
-        'Okay',
-          );
+      if (response.hits.length === 0) {
+          Notify.failure(
+        'Sorry, there are no images matching your search query. Please try again.'
+      );
         }
           
       } catch (error) {
@@ -48,7 +51,7 @@ export default class App extends Component {
         this.setState({ isLoading: false });
       }
     }
-
+  }
 
   formSubmit = value => {
     if (value.trim() === '') {
@@ -61,14 +64,20 @@ export default class App extends Component {
     });
   };
     
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+    }
     
   render() {
-        const {images, isLoading,} = this.state;
+        const {images, isLoading, showModal } = this.state;
     return (
       <div>
         <Serchbar onSubmit={this.formSubmit} />
-        <ImageGallery images={images}/>
         {isLoading && <Loader />}
+        <ImageGallery images={images} onClick={this.toggleModal}/>
+        {/* {showModal && <Modal/>} */}
       </div>
     )
   }

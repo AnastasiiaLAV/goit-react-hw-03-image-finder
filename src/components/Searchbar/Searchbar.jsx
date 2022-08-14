@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { BsSearch } from 'react-icons/bs'
 import PropTypes from 'prop-types';
 
+import {Searchbar, SearchForm, SearchFormBtn,SearchFormBtnLable,SearchFormInput} from './Searchbar.styled.js'
 export default class Serchbar extends Component{
     state = {
         queryImage: '',
@@ -28,13 +30,14 @@ export default class Serchbar extends Component{
         const { queryImage } = this.state;
         const { handleNameChange, handleSubmit } = this;
         return (
-            <header className="searchbar">
-                <form className="form" onSubmit={handleSubmit}>
-                    <button type="submit" className="button">
-                    <span className="button-label">Search</span>
-                    </button>
+            <Searchbar className="searchbar">
+                <SearchForm className="form" onSubmit={handleSubmit}>
+                    <SearchFormBtn type="submit" className="button">
+                        <BsSearch/>
+                    <SearchFormBtnLable className="button-label">Search</SearchFormBtnLable>
+                    </SearchFormBtn>
 
-                    <input
+                    <SearchFormInput
                     className="input"
                     type="text"
                     autoComplete="off"
@@ -43,8 +46,8 @@ export default class Serchbar extends Component{
                     value={queryImage}
                     onChange={handleNameChange}
                     />
-                </form>
-            </header>
+                </SearchForm>
+            </Searchbar>
         )
     }
 }
